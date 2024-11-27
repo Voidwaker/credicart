@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./components/layout";
-import Header from "./components/header";
 import Carousel from "./components/carousel";
 
 function App() {
@@ -19,10 +18,6 @@ function App() {
 
   return (
     <Layout>
-      <Header
-        products={products}
-        onSearch={(filtered) => setFilteredProducts(filtered)}
-      />
       <Carousel products={products} /> {}
       <h1>Velkommen til CrediCart!</h1>
       <ul style={{ listStyleType: "none", padding: 0 }}>
@@ -39,7 +34,9 @@ function App() {
               <strong>Pris:</strong> {product.discountedPrice} NOK
               {product.discountedPrice < product.price && (
                 <span style={{ marginLeft: "10px", color: "red" }}>
-                  ({Math.round(((product.price - product.discountedPrice) / product.price) * 100)}% rabatt!)
+                  ({Math.round(
+                    ((product.price - product.discountedPrice) / product.price) * 100
+                  )}% rabatt!)
                 </span>
               )}
             </p>
@@ -51,4 +48,5 @@ function App() {
 }
 
 export default App;
+
 
