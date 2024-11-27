@@ -12,7 +12,7 @@ function Header({ products, onSearch }) {
           <li><a href="/cart">Handlekurv</a></li>
           <li><a href="/contact">Kontakt</a></li>
         </ul>
-        <SearchBar products={products} onSearch={onSearch} />
+        <SearchBar products={products} onSearch={onSearch} /> {}
       </nav>
     </header>
   );
