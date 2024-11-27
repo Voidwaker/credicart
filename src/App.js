@@ -10,11 +10,17 @@ function App() {
     fetch("https://v2.api.noroff.dev/online-shop")
       .then((response) => response.json())
       .then((data) => {
-        setProducts(data.data);
-        setFilteredProducts(data.data);
+        const products = data.data || []; // Fallback til en tom array hvis data mangler
+        setProducts(products);
+        setFilteredProducts(products);
       })
-      .catch((error) => console.error("Error fetching products:", error));
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+        setProducts([]); // Sett en tom array ved feil
+        setFilteredProducts([]);
+      });
   }, []);
+  
 
   return (
     <Layout>
