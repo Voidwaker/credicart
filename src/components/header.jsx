@@ -7,10 +7,10 @@ function Header({ products, onSearch }) {
       <nav>
         <h1>CrediCart</h1>
         <ul>
-          <li><a href="/">Hjem</a></li>
-          <li><a href="/products">Produkter</a></li>
-          <li><a href="/cart">Handlekurv</a></li>
-          <li><a href="/contact">Kontakt</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/products">Products</a></li>
+          <li><a href="/cart">Cart</a></li>
+          <li><a href="/contact">Contact</a></li>
         </ul>
         <SearchBar products={products} onSearch={onSearch} /> {}
       </nav>

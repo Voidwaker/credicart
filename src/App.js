@@ -10,22 +10,23 @@ function App() {
     fetch("https://v2.api.noroff.dev/online-shop")
       .then((response) => response.json())
       .then((data) => {
-        const products = data.data || []; // Fallback til en tom array hvis data mangler
+        const products = data.data || []; 
         setProducts(products);
         setFilteredProducts(products);
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
-        setProducts([]); // Sett en tom array ved feil
+        setProducts([]); 
         setFilteredProducts([]);
       });
   }, []);
   
 
+
   return (
     <Layout>
       <Carousel products={products} /> {}
-      <h1>Velkommen til CrediCart!</h1>
+      <h1>Welcome to  CrediCart!</h1>
       <ul style={{ listStyleType: "none", padding: 0 }}>
         {filteredProducts.map((product) => (
           <li key={product.id} style={{ marginBottom: "20px" }}>
@@ -42,7 +43,7 @@ function App() {
                 <span style={{ marginLeft: "10px", color: "red" }}>
                   ({Math.round(
                     ((product.price - product.discountedPrice) / product.price) * 100
-                  )}% rabatt!)
+                  )}% Discount!)
                 </span>
               )}
             </p>
