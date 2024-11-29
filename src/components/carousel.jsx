@@ -26,7 +26,7 @@ function Carousel({ products }) {
             <h3>{product.title}</h3>
             <p>{product.description}</p>
             <p>
-              <strong>Pris:</strong> {product.discountedPrice} NOK
+              <strong>Price:</strong> {product.discountedPrice} NOK
             </p>
           </div>
         ))}
