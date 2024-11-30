@@ -62,7 +62,7 @@ function App() {
                       <h2>{product.title}</h2>
                       <p>{product.description}</p>
                       <p>
-                        <strong>Pris:</strong> {product.discountedPrice} NOK
+                        <strong>Price:</strong> {product.discountedPrice} NOK
                       </p>
                       <a href={`/products/${product.id}`}>View Product</a>
                     </li>
