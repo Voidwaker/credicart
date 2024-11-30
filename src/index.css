@@ -1,4 +1,4 @@
-/* Global stil */
+/* Global Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -7,7 +7,7 @@ body {
   color: #333;
 }
 
-/* Header-stil */
+/* Header Styles */
 header {
   background-color: #2c3e50;
   color: white;
@@ -24,27 +24,31 @@ header h1 {
 header ul {
   list-style: none;
   display: flex;
+  flex-direction: row; 
   gap: 20px;
   padding: 0;
   margin: 0;
-}
-
-header ul li {
-  margin: 0;
+  justify-content: center;
+  align-items: center;
 }
 
 header ul li a {
-  color: white;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: white;
+  color: #333;
+  border-radius: 5px;
   text-decoration: none;
   font-weight: bold;
-  transition: color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 header ul li a:hover {
-  color: #1abc9c;
+  background-color: #1abc9c;
+  color: white;
 }
 
-/* Footer-stil */
+/* Footer Styles */
 footer {
   background-color: #2c3e50;
   color: white;
@@ -53,16 +57,16 @@ footer {
   margin-top: 20px;
 }
 
-/* Main container */
+/* Main Container */
 main {
   padding: 20px;
 }
 
-/* Karusell-stil */
+/* Carousel Styles */
 .slick-slider {
   margin: 20px auto;
-  width: 80%; 
-  max-width: 1200px; 
+  width: 80%;
+  max-width: 1200px;
 }
 
 .slick-slide img {
@@ -84,8 +88,8 @@ main {
   color: #1abc9c;
 }
 
-/* Produktliste-stil */
-ul {
+/* Product List Styles */
+ul.product-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -94,46 +98,46 @@ ul {
   list-style: none;
 }
 
-ul li {
+ul.product-list li {
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  flex: 1 1 calc(33.333% - 20px); 
+  flex: 1 1 calc(33.333% - 20px);
   max-width: calc(33.333% - 20px);
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
-ul li:hover {
+ul.product-list li:hover {
   transform: scale(1.05);
   box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
 }
 
-ul li img {
+ul.product-list li img {
   max-width: 100%;
   height: auto;
   border-radius: 10px;
   margin-bottom: 10px;
 }
 
-ul li h2 {
+ul.product-list li h2 {
   font-size: 18px;
   margin: 10px 0;
 }
 
-ul li p {
+ul.product-list li p {
   font-size: 14px;
   color: #666;
 }
 
-ul li strong {
+ul.product-list li strong {
   color: #333;
   font-size: 16px;
 }
 
-/* Søkelinje-stil */
+/* Search Bar Styles */
 input[type="text"] {
   width: 100%;
   max-width: 300px;
@@ -150,25 +154,21 @@ input[type="text"]:focus {
   border-color: #1abc9c;
 }
 
-/* Mobilvennlighet */
+/* Responsiveness */
 @media (max-width: 768px) {
-  ul li {
-    flex: 1 1 calc(50% - 20px); 
-    max-width: calc(50% - 20px);
-  }
-
   header ul {
-    flex-direction: column;
+    flex-direction: column; 
     gap: 10px;
   }
 
-  .slick-slider {
-    width: 90%;
+  ul.product-list li {
+    flex: 1 1 calc(50% - 20px); 
+    max-width: calc(50% - 20px);
   }
 }
 
 @media (max-width: 480px) {
-  ul li {
+  ul.product-list li {
     flex: 1 1 100%; 
     max-width: 100%;
   }
@@ -178,6 +178,6 @@ input[type="text"]:focus {
   }
 }
 
-
+/* Importing carousel styles */
 @import "~slick-carousel/slick/slick.css";
 @import "~slick-carousel/slick/slick-theme.css";
