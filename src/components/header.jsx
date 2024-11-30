@@ -1,5 +1,4 @@
 import React from "react";
-import SearchBar from "./searchBar";
 
 function Header({ products, onSearch }) {
   return (
@@ -12,7 +11,6 @@ function Header({ products, onSearch }) {
           <li><a href="/cart">Cart</a></li>
           <li><a href="/contact">Contact</a></li>
         </ul>
-        <SearchBar products={products} onSearch={onSearch} /> {}
       </nav>
     </header>
   );

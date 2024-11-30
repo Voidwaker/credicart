@@ -1,25 +1,12 @@
 import React, { useState } from "react";
 
-function SearchBar({ products, onSearch }) {
+function SearchBar({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSearch = (event) => {
-    const value = event.target.value.toLowerCase();
+  const handleInputChange = (event) => {
+    const value = event.target.value;
     setSearchTerm(value);
-
-    // Sjekk om products eksisterer før filtrering
-    if (!products || products.length === 0) {
-      onSearch([]);
-      return;
-    }
-
-    const filteredProducts = products.filter(
-      (product) =>
-        product.title.toLowerCase().includes(value) ||
-        product.description.toLowerCase().includes(value) ||
-        product.tags.some((tag) => tag.toLowerCase().includes(value))
-    );
-    onSearch(filteredProducts);
+    onSearch(value);
   };
 
   return (
@@ -28,11 +15,22 @@ function SearchBar({ products, onSearch }) {
         type="text"
         placeholder="Søk etter produkter..."
         value={searchTerm}
-        onChange={handleSearch}
+        onChange={handleInputChange}
+        style={{
+          width: "100%",
+          maxWidth: "300px",
+          padding: "10px",
+          margin: "10px 0",
+          border: "1px solid #ddd",
+          borderRadius: "5px",
+        }}
       />
     </div>
   );
 }
 
 export default SearchBar;
+
+
+
 
