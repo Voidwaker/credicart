@@ -46,7 +46,7 @@ function App() {
               <>
                 <SearchBar onSearch={handleSearch} /> {}
                 <Carousel products={products} />
-                <h1>Velkommen til CrediCart!</h1>
+                <h1>Welcome to CrediCart!</h1>
                 <ul className="product-list">
                   {filteredProducts.map((product) => ( 
                     <li key={product.id}>
