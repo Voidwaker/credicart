@@ -4,6 +4,7 @@ import Layout from "./components/layout";
 import Carousel from "./components/carousel";
 import ProductPage from "./pages/productPage";
 import SearchBar from "./components/searchBar"; 
+import ContactPage from "./pages/contactPage"; 
 
 function App() {
   const [products, setProducts] = useState([]); 
@@ -21,7 +22,6 @@ function App() {
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
 
-  
   const addToCart = (product) => {
     setCart((prevCart) => [...prevCart, product]);
   };
@@ -44,7 +44,7 @@ function App() {
             path="/"
             element={
               <>
-                <SearchBar onSearch={handleSearch} /> {}
+                <SearchBar onSearch={handleSearch} />
                 <Carousel products={products} />
                 <h1>Welcome to CrediCart!</h1>
                 <ul className="product-list">
@@ -75,6 +75,10 @@ function App() {
             path="/products/:id"
             element={<ProductPage products={products} addToCart={addToCart} />}
           />
+          <Route
+            path="/contact"
+            element={<ContactPage />}
+          />
         </Routes>
       </Layout>
     </Router>
@@ -82,6 +86,7 @@ function App() {
 }
 
 export default App;
+
 
 
 
