@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout";
 import Carousel from "./components/carousel";
@@ -7,8 +7,6 @@ import SearchBar from "./components/searchBar";
 import ContactPage from "./pages/contactPage"; 
 import CartPage from "./pages/cartPage"; 
 import CheckoutSuccessPage from "./pages/checkoutSuccessPage"; 
-import Header from "./components/header";
-
 
 function App() {
   const [products, setProducts] = useState([]); 
@@ -30,9 +28,9 @@ function App() {
     setCart((prevCart) => [...prevCart, product]);
   };
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     setCart([]);
-  };
+  }, []);
 
   const handleSearch = (searchTerm) => {
     const lowercasedTerm = searchTerm.toLowerCase();
@@ -46,8 +44,7 @@ function App() {
 
   return (
     <Router>
-      <Layout>
-        <Header cart={cart} /> {}
+      <Layout> {}
         <Routes>
           <Route
             path="/"
@@ -103,6 +100,7 @@ function App() {
 }
 
 export default App;
+
 
 
 
