@@ -5,6 +5,10 @@ import Carousel from "./components/carousel";
 import ProductPage from "./pages/productPage";
 import SearchBar from "./components/searchBar"; 
 import ContactPage from "./pages/contactPage"; 
+import CartPage from "./pages/cartPage"; 
+import CheckoutSuccessPage from "./pages/checkoutSuccessPage"; 
+import Header from "./components/header";
+
 
 function App() {
   const [products, setProducts] = useState([]); 
@@ -26,6 +30,10 @@ function App() {
     setCart((prevCart) => [...prevCart, product]);
   };
 
+  const clearCart = () => {
+    setCart([]);
+  };
+
   const handleSearch = (searchTerm) => {
     const lowercasedTerm = searchTerm.toLowerCase();
     const filtered = products.filter(
@@ -39,6 +47,7 @@ function App() {
   return (
     <Router>
       <Layout>
+        <Header cart={cart} /> {}
         <Routes>
           <Route
             path="/"
@@ -79,6 +88,14 @@ function App() {
             path="/contact"
             element={<ContactPage />}
           />
+          <Route
+            path="/cart"
+            element={<CartPage cart={cart} />}
+          />
+          <Route
+            path="/checkout-success"
+            element={<CheckoutSuccessPage clearCart={clearCart} />}
+          />
         </Routes>
       </Layout>
     </Router>
@@ -86,6 +103,7 @@ function App() {
 }
 
 export default App;
+
 
 
 
