@@ -14,7 +14,7 @@ function Carousel({ products }) {
 
   return (
     <div style={{ margin: "20px 0" }}>
-      <h2>Populære Produkter</h2>
+      <h2>Top Sellers!</h2>
       <Slider {...settings}>
         {products.slice(0, 5).map((product) => ( 
           <div key={product.id}>
