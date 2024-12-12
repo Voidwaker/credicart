@@ -13,7 +13,7 @@ function ProductPage({ products, addToCart }) {
   const handleAddToCart = () => {
     addToCart(product);
     setIsPopupVisible(true); 
-    setTimeout(() => setIsPopupVisible(false), 2000);
+    setTimeout(() => setIsPopupVisible(false), 1000);
   };
 
   return (
