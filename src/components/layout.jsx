@@ -2,14 +2,15 @@ import React from "react";
 import Header from "./header";
 import Footer from "./footer";
 
-function Layout({ children }) {
+const Layout = ({ children, cart }) => {
   return (
     <>
-      <Header />
+      <Header cart={cart} /> {}
       <main>{children}</main>
       <Footer />
     </>
   );
-}
+};
 
 export default Layout;
+
