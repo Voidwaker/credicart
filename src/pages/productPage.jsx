@@ -1,84 +1,89 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-function ProductPage({ products, addToCart }) {
-  const { id } = useParams();
-  const product = products.find((p) => p.id === id);
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
+function ProductPage({ addToCart }) {
+    const { id } = useParams();
+    const [product, setProduct] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  if (!product) {
-    return <p>Product not found</p>;
-  }
+    useEffect(() => {
+        async function fetchProduct() {
+            try {
+                const response = await fetch(`https://v2.api.noroff.dev/online-shop/${id}`);
+                if (!response.ok) {
+                    throw new Error("Failed to fetch product details");
+                }
+                const data = await response.json();
+                setProduct(data.data); 
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        }
 
-  const handleAddToCart = () => {
-    addToCart(product);
-    setIsPopupVisible(true); 
-    setTimeout(() => setIsPopupVisible(false), 1000);
-  };
+        fetchProduct();
+    }, [id]);
 
-  return (
-    <div style={{ padding: "20px" }}>
-      <h1>{product.title}</h1>
-      <img
-        src={product.image.url}
-        alt={product.image.alt}
-        style={{ width: "300px", height: "300px", objectFit: "cover" }}
-      />
-      <p>{product.description}</p>
-      <p>
-        <strong>Price:</strong> {product.discountedPrice} NOK
-      </p>
-      {product.discountedPrice < product.price && (
-        <p style={{ color: "red" }}>
-          Save {Math.round(((product.price - product.discountedPrice) / product.price) * 100)}%!
-        </p>
-      )}
-      <button
-        onClick={handleAddToCart}
-        style={{
-          padding: "10px 20px",
-          background: "#1abc9c",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        Add to Cart
-      </button>
+    if (loading) return <p>Loading product details...</p>;
+    if (error) return <p>Error: {error}</p>;
 
-      {}
-      {isPopupVisible && (
-        <div style={popupStyles}>
-          <div style={popupContentStyles}>
-            <p>{product.title} has been added to the cart!</p>
-          </div>
+    if (!product) {
+        return <p>No product found.</p>;
+    }
+
+    const calculateDiscount = () => {
+        if (product.price > product.discountedPrice) {
+            const discount = ((product.price - product.discountedPrice) / product.price) * 100;
+            return `${discount.toFixed(2)}% off`;
+        }
+        return null;
+    };
+
+    const calculateSavings = () => {
+        if (product.price > product.discountedPrice) {
+            const savings = product.price - product.discountedPrice;
+            return savings.toFixed(2); 
+        }
+        return null;
+    };
+
+    return (
+        <div>
+            <h1>{product.title}</h1>
+            {product.image && product.image.url ? (
+                <img src={product.image.url} alt={product.image.alt} />
+            ) : (
+                <p>No image available</p>
+            )}
+            <p>{product.description}</p>
+            <p>Price: {product.discountedPrice} NOK</p>
+            {product.price > product.discountedPrice && (
+                <>
+                    <p>Discount: {calculateDiscount()}</p>
+                    <p>You save: {calculateSavings()} NOK</p>
+                </>
+            )}
+            <button onClick={() => addToCart(product)}>Add to Cart</button>
+
+            {product.reviews && product.reviews.length > 0 ? (
+                <div>
+                    <h2>Reviews</h2>
+                    <ul>
+                        {product.reviews.map((review) => (
+                            <li key={review.id}>
+                                <strong>{review.username.replace(/\.$/, "")}</strong>: {review.description}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ) : (
+                <p>No reviews available for this product.</p>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 }
-
-const popupStyles = {
-  position: "fixed",
-  top: "0",
-  left: "0",
-  width: "100%",
-  height: "100%",
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  zIndex: "1000",
-};
-
-const popupContentStyles = {
-  backgroundColor: "white",
-  padding: "20px",
-  borderRadius: "10px",
-  textAlign: "center",
-  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-};
 
 export default ProductPage;
 
