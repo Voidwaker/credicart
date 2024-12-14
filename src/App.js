@@ -3,15 +3,15 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout";
 import Carousel from "./components/carousel";
 import ProductPage from "./pages/productPage";
-import SearchBar from "./components/searchBar"; 
-import ContactPage from "./pages/contactPage"; 
-import CartPage from "./pages/cartPage"; 
-import CheckoutSuccessPage from "./pages/checkoutSuccessPage"; 
+import SearchBar from "./components/searchBar";
+import ContactPage from "./pages/contactPage";
+import CartPage from "./pages/cartPage";
+import CheckoutSuccessPage from "./pages/checkoutSuccessPage";
 
 function App() {
-  const [products, setProducts] = useState([]); 
-  const [filteredProducts, setFilteredProducts] = useState([]); 
-  const [cart, setCart] = useState([]); 
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     fetch("https://v2.api.noroff.dev/online-shop")
@@ -19,7 +19,7 @@ function App() {
       .then((data) => {
         const products = data.data || [];
         setProducts(products);
-        setFilteredProducts(products); 
+        setFilteredProducts(products);
       })
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
@@ -44,17 +44,19 @@ function App() {
 
   return (
     <Router>
-      <Layout cart={cart}> {}
+      <Layout cart={cart}>
         <Routes>
           <Route
             path="/"
             element={
               <>
-                <SearchBar onSearch={handleSearch} />
                 <Carousel products={products} />
-                <h1>Welcome to CrediCart!</h1>
+                <h1 style={{ textAlign: "center", margin: "20px 0" }}>
+                  Welcome to CrediCart!
+                </h1>
+                <SearchBar onSearch={handleSearch} />
                 <ul className="product-list">
-                  {filteredProducts.map((product) => ( 
+                  {filteredProducts.map((product) => (
                     <li key={product.id}>
                       <img
                         src={product.image.url}
@@ -81,14 +83,8 @@ function App() {
             path="/products/:id"
             element={<ProductPage products={products} addToCart={addToCart} />}
           />
-          <Route
-            path="/contact"
-            element={<ContactPage />}
-          />
-          <Route
-            path="/cart"
-            element={<CartPage cart={cart} />}
-          />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/cart" element={<CartPage cart={cart} />} />
           <Route
             path="/checkout-success"
             element={<CheckoutSuccessPage clearCart={clearCart} />}
