@@ -25,7 +25,7 @@ function App() {
   }, []);
 
   const addToCart = (product) => {
-    setCart((prevCart) => [...prevCart, product]);
+    setCart((prevCart) => [...prevCart, { ...product, quantity: 1 }]);
   };
 
   const clearCart = useCallback(() => {
@@ -84,7 +84,10 @@ function App() {
             element={<ProductPage products={products} addToCart={addToCart} />}
           />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/cart" element={<CartPage cart={cart} />} />
+          <Route
+            path="/cart"
+            element={<CartPage cart={cart} clearCart={clearCart} />}
+          />
           <Route
             path="/checkout-success"
             element={<CheckoutSuccessPage clearCart={clearCart} />}
