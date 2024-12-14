@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function ProductPage({ addToCart }) {
     const { id } = useParams();
+    const navigate = useNavigate(); 
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -75,26 +76,83 @@ function ProductPage({ addToCart }) {
                     <p style={{ textAlign: "center" }}>You save: {calculateSavings()} NOK</p>
                 </>
             )}
-            <button
-                onClick={() => addToCart(product)}
-                style={{
-                    display: "block",
-                    margin: "20px auto",
-                    padding: "10px 20px",
-                    backgroundColor: "#1abc9c",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                }}
-            >
-                Add to Cart
-            </button>
+            <div style={{ textAlign: "center", marginTop: "20px" }}>
+                <button
+                    onClick={() => addToCart(product)}
+                    style={{
+                        padding: "10px 20px",
+                        backgroundColor: "#1abc9c",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "5px",
+                        marginRight: "10px",
+                        cursor: "pointer",
+                    }}
+                >
+                    Add to Cart
+                </button>
+                <button
+                    onClick={() => {
+                        addToCart(product);
+                        navigate("/cart");
+                    }}
+                    style={{
+                        padding: "10px 20px",
+                        backgroundColor: "#3498db",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "5px",
+                        marginRight: "10px",
+                        cursor: "pointer",
+                    }}
+                >
+                    Add and Go to Cart
+                </button>
+                <button
+                    onClick={() => navigate("/")}
+                    style={{
+                        padding: "10px 20px",
+                        backgroundColor: "#e74c3c",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                    }}
+                >
+                    Back to Products
+                </button>
+            </div>
+
+            {product.reviews && product.reviews.length > 0 ? (
+                <div className="product-reviews">
+                    <h2 style={{ textAlign: "center" }}>Reviews</h2>
+                    <ul style={{ maxWidth: "600px", margin: "0 auto", padding: "0", listStyleType: "none" }}>
+                        {product.reviews.map((review) => (
+                            <li
+                                key={review.id}
+                                style={{
+                                    backgroundColor: "#f9f9f9",
+                                    padding: "10px",
+                                    margin: "10px 0",
+                                    borderRadius: "5px",
+                                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                                }}
+                            >
+                                <strong>{review.username.replace(/\.$/, "")}</strong>: {review.description}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ) : (
+                <p style={{ textAlign: "center" }}>No reviews available for this product.</p>
+            )}
         </div>
     );
 }
 
 export default ProductPage;
+
+
 
 
 
