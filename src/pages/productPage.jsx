@@ -15,7 +15,7 @@ function ProductPage({ addToCart }) {
                     throw new Error("Failed to fetch product details");
                 }
                 const data = await response.json();
-                setProduct(data.data); 
+                setProduct(data.data);
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -44,47 +44,57 @@ function ProductPage({ addToCart }) {
     const calculateSavings = () => {
         if (product.price > product.discountedPrice) {
             const savings = product.price - product.discountedPrice;
-            return savings.toFixed(2); 
+            return savings.toFixed(2);
         }
         return null;
     };
 
     return (
-        <div>
-            <h1>{product.title}</h1>
+        <div className="product-page-container">
+            <h1 style={{ textAlign: "center" }}>{product.title}</h1>
             {product.image && product.image.url ? (
-                <img src={product.image.url} alt={product.image.alt} />
+                <img
+                    src={product.image.url}
+                    alt={product.image.alt}
+                    style={{
+                        maxWidth: "100%",
+                        height: "auto",
+                        display: "block",
+                        margin: "0 auto",
+                        objectFit: "contain",
+                    }}
+                />
             ) : (
                 <p>No image available</p>
             )}
-            <p>{product.description}</p>
-            <p>Price: {product.discountedPrice} NOK</p>
+            <p style={{ textAlign: "center" }}>{product.description}</p>
+            <p style={{ textAlign: "center" }}>Price: {product.discountedPrice} NOK</p>
             {product.price > product.discountedPrice && (
                 <>
-                    <p>Discount: {calculateDiscount()}</p>
-                    <p>You save: {calculateSavings()} NOK</p>
+                    <p style={{ textAlign: "center" }}>Discount: {calculateDiscount()}</p>
+                    <p style={{ textAlign: "center" }}>You save: {calculateSavings()} NOK</p>
                 </>
             )}
-            <button onClick={() => addToCart(product)}>Add to Cart</button>
-
-            {product.reviews && product.reviews.length > 0 ? (
-                <div>
-                    <h2>Reviews</h2>
-                    <ul>
-                        {product.reviews.map((review) => (
-                            <li key={review.id}>
-                                <strong>{review.username.replace(/\.$/, "")}</strong>: {review.description}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ) : (
-                <p>No reviews available for this product.</p>
-            )}
+            <button
+                onClick={() => addToCart(product)}
+                style={{
+                    display: "block",
+                    margin: "20px auto",
+                    padding: "10px 20px",
+                    backgroundColor: "#1abc9c",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                }}
+            >
+                Add to Cart
+            </button>
         </div>
     );
 }
 
 export default ProductPage;
+
 
 
