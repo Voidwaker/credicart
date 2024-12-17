@@ -30,10 +30,12 @@ CrediCart is a React-based application that fetches product data from an externa
 
 ```
 /src  
-│── components/  
-│   │── layout.jsx  
-│   │── carousel.jsx  
-│   │── searchBar.jsx  
+│── components/
+│   │── carousel.jsx   
+│   │── footer.jsx  
+│   │── header.jsx  
+│   │── layout.jsx
+│   │── searchBar.jsx 
 │── pages/  
 │   │── productPage.jsx  
 │   │── cartPage.jsx  
@@ -41,7 +43,7 @@ CrediCart is a React-based application that fetches product data from an externa
 │   │── checkoutSuccessPage.jsx  
 │── App.js  
 │── index.js  
-│── styles.css  
+│── indexx.css  
 ```
 
 ---
