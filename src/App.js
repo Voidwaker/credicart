@@ -11,7 +11,10 @@ import CheckoutSuccessPage from "./pages/checkoutSuccessPage";
 function App() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
 
   useEffect(() => {
     fetch("https://v2.api.noroff.dev/online-shop")
@@ -24,12 +27,28 @@ function App() {
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
   const addToCart = (product) => {
-    setCart((prevCart) => [...prevCart, { ...product, quantity: 1 }]);
+    setCart((prevCart) => {
+      const existingProduct = prevCart.find((item) => item.id === product.id);
+
+      if (existingProduct) {
+        return prevCart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prevCart, { ...product, quantity: 1 }];
+    });
   };
 
   const clearCart = useCallback(() => {
     setCart([]);
+    localStorage.removeItem("cart"); 
   }, []);
 
   const handleSearch = (searchTerm) => {
@@ -99,6 +118,7 @@ function App() {
 }
 
 export default App;
+
 
 
 

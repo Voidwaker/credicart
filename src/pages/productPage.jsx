@@ -3,10 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 
 function ProductPage({ addToCart }) {
     const { id } = useParams();
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [confirmation, setConfirmation] = useState(""); 
 
     useEffect(() => {
         async function fetchProduct() {
@@ -26,6 +27,12 @@ function ProductPage({ addToCart }) {
 
         fetchProduct();
     }, [id]);
+
+    const handleAddToCart = () => {
+        addToCart(product);
+        setConfirmation(`${product.title} has been added to your cart!`);
+        setTimeout(() => setConfirmation(""), 2000); 
+    };
 
     if (loading) return <p>Loading product details...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -76,42 +83,28 @@ function ProductPage({ addToCart }) {
                     <p style={{ textAlign: "center" }}>You save: {calculateSavings()} NOK</p>
                 </>
             )}
+
             <div style={{ textAlign: "center", marginTop: "20px" }}>
+                {}
                 <button
-                    onClick={() => addToCart(product)}
+                    onClick={handleAddToCart}
                     style={{
                         padding: "10px 20px",
                         backgroundColor: "#1abc9c",
                         color: "white",
                         border: "none",
                         borderRadius: "5px",
-                        marginRight: "10px",
                         cursor: "pointer",
                     }}
                 >
                     Add to Cart
                 </button>
-                <button
-                    onClick={() => {
-                        addToCart(product);
-                        navigate("/cart");
-                    }}
-                    style={{
-                        padding: "10px 20px",
-                        backgroundColor: "#3498db",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "5px",
-                        marginRight: "10px",
-                        cursor: "pointer",
-                    }}
-                >
-                    Add and Go to Cart
-                </button>
+                {}
                 <button
                     onClick={() => navigate("/")}
                     style={{
                         padding: "10px 20px",
+                        marginLeft: "10px",
                         backgroundColor: "#e74c3c",
                         color: "white",
                         border: "none",
@@ -123,6 +116,21 @@ function ProductPage({ addToCart }) {
                 </button>
             </div>
 
+            {}
+            {confirmation && (
+                <div
+                    style={{
+                        textAlign: "center",
+                        marginTop: "20px",
+                        color: "#2ecc71",
+                        fontWeight: "bold",
+                    }}
+                >
+                    {confirmation}
+                </div>
+            )}
+
+            {}
             {product.reviews && product.reviews.length > 0 ? (
                 <div className="product-reviews">
                     <h2 style={{ textAlign: "center" }}>Reviews</h2>
