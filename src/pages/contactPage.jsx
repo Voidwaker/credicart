@@ -8,6 +8,7 @@ function ContactPage() {
     body: "",
   });
   const [errors, setErrors] = useState({});
+  const [showModal, setShowModal] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,8 +40,12 @@ function ContactPage() {
       setErrors(validationErrors);
     } else {
       setErrors({});
-      console.log("Form submitted successfully:", formData);
-      alert("Thank you for your message!");
+      setShowModal(true);
+
+      setTimeout(() => {
+        setShowModal(false);
+      }, 1500);
+
       setFormData({
         fullName: "",
         subject: "",
@@ -51,62 +56,142 @@ function ContactPage() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Contact Us</h1>
+    <div
+      style={{
+        maxWidth: "600px",
+        margin: "40px auto",
+        padding: "20px",
+        borderRadius: "8px",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        backgroundColor: "#ffffff",
+      }}
+    >
+      <h1 style={{ textAlign: "center", color: "#2c3e50" }}>Contact Us</h1>
       <form onSubmit={handleSubmit} noValidate>
-        <div>
-          <label>Full Name:</label>
+        {}
+        <div style={{ marginBottom: "20px" }}>
+          <label style={{ fontWeight: "bold" }}>Full Name:</label>
           <input
             type="text"
             name="fullName"
             value={formData.fullName}
             onChange={handleChange}
-            style={{ display: "block", margin: "10px 0", width: "100%" }}
+            style={{
+              display: "block",
+              width: "100%",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              marginTop: "5px",
+            }}
           />
           {errors.fullName && <p style={{ color: "red" }}>{errors.fullName}</p>}
         </div>
 
-        <div>
-          <label>Subject:</label>
+        {}
+        <div style={{ marginBottom: "20px" }}>
+          <label style={{ fontWeight: "bold" }}>Subject:</label>
           <input
             type="text"
             name="subject"
             value={formData.subject}
             onChange={handleChange}
-            style={{ display: "block", margin: "10px 0", width: "100%" }}
+            style={{
+              display: "block",
+              width: "100%",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              marginTop: "5px",
+            }}
           />
           {errors.subject && <p style={{ color: "red" }}>{errors.subject}</p>}
         </div>
 
-        <div>
-          <label>Email:</label>
+        {}
+        <div style={{ marginBottom: "20px" }}>
+          <label style={{ fontWeight: "bold" }}>Email:</label>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            style={{ display: "block", margin: "10px 0", width: "100%" }}
+            style={{
+              display: "block",
+              width: "100%",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              marginTop: "5px",
+            }}
           />
           {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
         </div>
 
-        <div>
-          <label>Message:</label>
+        {}
+        <div style={{ marginBottom: "20px" }}>
+          <label style={{ fontWeight: "bold" }}>Message:</label>
           <textarea
             name="body"
             value={formData.body}
             onChange={handleChange}
-            style={{ display: "block", margin: "10px 0", width: "100%", height: "100px" }}
+            style={{
+              display: "block",
+              width: "100%",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              marginTop: "5px",
+              height: "120px",
+              resize: "none",
+            }}
           />
           {errors.body && <p style={{ color: "red" }}>{errors.body}</p>}
         </div>
 
-        <button type="submit" style={{ padding: "10px 20px", background: "#1abc9c", color: "white", border: "none", borderRadius: "5px" }}>
+        {}
+        <button
+          type="submit"
+          style={{
+            width: "100%",
+            padding: "12px",
+            backgroundColor: "#1abc9c",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            fontWeight: "bold",
+            cursor: "pointer",
+          }}
+        >
           Submit
         </button>
       </form>
+
+      {}
+      {showModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "#ffffff",
+            color: "#2c3e50",
+            padding: "20px",
+            borderRadius: "8px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
+            textAlign: "center",
+            zIndex: 1000,
+          }}
+        >
+          <p style={{ fontSize: "1.2rem", fontWeight: "bold" }}>
+            Thank you for your message!
+          </p>
+        </div>
+      )}
     </div>
   );
 }
 
 export default ContactPage;
+
